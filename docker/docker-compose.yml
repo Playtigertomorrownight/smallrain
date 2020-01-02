@@ -12,7 +12,7 @@ services:
       DB_DATABASE: keycloak_data
       DB_USER: root
       DB_PASSWORD: ${DB_PASSWORD}
-      KEYCLOAK_STATISTICS:db,http
+      KEYCLOAK_STATISTICS: db,http
     ports:
       - 8080:8080
     volumes:
