@@ -1,7 +1,7 @@
 version: '3'
 services:
   kerclock:
-    image: redis:5.0-alpine
+    image: jboss/keycloak
     container_name: kerclock
     environment:
       KEYCLOAK_USER: ${KEYCLOAK_USER}
