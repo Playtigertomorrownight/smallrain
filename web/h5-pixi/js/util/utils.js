@@ -4,7 +4,7 @@ WY_SPACE.util = {
 	getWindowSize: function(){   //获取屏幕宽高
 		return {
 			  width:  window.innerWidth || document.body.clientWidth || document.documentElement.clientWidth,
-				height:  (window.innerHeight || document.body.clientHeight || document.documentElement.clientHeight)-4
+				height:  (window.innerHeight || document.body.clientHeight || document.documentElement.clientHeight)
 			}
 	},
 	fullScreen: function(el) { //某个元素触发f11全屏
