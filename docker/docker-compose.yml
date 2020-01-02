@@ -16,7 +16,7 @@ services:
     ports:
       - 8080:8080
     volumes:
-      - /wangying/malldata/kerclock/theme:/opt/jboss/keycloak/standalone/deployments #添加自定义主题
+      - /wangying/malldata/kerclock/theme:/opt/jboss/keycloak/themes #添加自定义主题
       - /wangying/malldata/kerclock/https:/etc/x509/https  #证书
       
   redis:
