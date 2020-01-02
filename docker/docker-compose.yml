@@ -1,5 +1,24 @@
 version: '3'
 services:
+  kerclock:
+    image: redis:5.0-alpine
+    container_name: kerclock
+    environment:
+      KEYCLOAK_USER: ${KEYCLOAK_USER}
+      KEYCLOAK_PASSWORD: ${KEYCLOAK_PASSWORD}
+      DB_ADDR: 172.16.90.88
+      DB_VENDOR: mysql
+      DB_PORT: 3306
+      DB_DATABASE: keycloak_data
+      DB_USER: root
+      DB_PASSWORD: ${DB_PASSWORD}
+      KEYCLOAK_STATISTICS:db,http
+    ports:
+      - 8080:8080
+    volumes:
+      - /wangying/malldata/kerclock/theme:/opt/jboss/keycloak/standalone/deployments #添加自定义主题
+      - /wangying/malldata/kerclock/https:/etc/x509/https  #证书
+      
   redis:
     image: redis:5.0-alpine
     container_name: redis
@@ -19,27 +38,27 @@ services:
       - 5672:5672
       - 15672:15672
   
-  elasticsearch:
-    image: elasticsearch:7.4.2
-    container_name: elasticsearch
-    environment:
-      - "cluster.name=elasticsearch" #设置集群名称为elasticsearch
-      - "discovery.type=single-node" #以单一节点模式启动
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m" #设置使用jvm内存大小
-    volumes:
-      - /wangying/malldata/elasticsearch/plugins:/usr/share/elasticsearch/plugins #插件文件挂载
-      - /wangying/malldata/elasticsearch/data:/usr/share/elasticsearch/data #数据文件挂载
-    ports:
-      - 9200:9200
-  
-  kibana:
-    image: kibana:7.4.2
-    container_name: kibana
-    links:
-      - elasticsearch:es #可以用es这个域名访问elasticsearch服务
-    depends_on:
-      - elasticsearch #kibana在elasticsearch启动之后再启动
-    environment:
-      - "elasticsearch.hosts=http://es:9200" #设置访问elasticsearch的地址
-    ports:
-      - 5601:5601
+#  elasticsearch:
+#   image: elasticsearch:7.4.2
+#    container_name: elasticsearch
+#    environment:
+#      - "cluster.name=elasticsearch" #设置集群名称为elasticsearch
+#      - "discovery.type=single-node" #以单一节点模式启动
+#      - "ES_JAVA_OPTS=-Xms512m -Xmx512m" #设置使用jvm内存大小
+#    volumes:
+#      - /wangying/malldata/elasticsearch/plugins:/usr/share/elasticsearch/plugins #插件文件挂载
+#      - /wangying/malldata/elasticsearch/data:/usr/share/elasticsearch/data #数据文件挂载
+#    ports:
+#      - 9200:9200
+#  
+#  kibana:
+#    image: kibana:7.4.2
+#    container_name: kibana
+#    links:
+#      - elasticsearch:es #可以用es这个域名访问elasticsearch服务
+#    depends_on:
+#      - elasticsearch #kibana在elasticsearch启动之后再启动
+#    environment:
+#      - "elasticsearch.hosts=http://es:9200" #设置访问elasticsearch的地址
+#    ports:
+#      - 5601:5601
